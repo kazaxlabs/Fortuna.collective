@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+/* ======= DESIGN TOKENS ======= */
+:root {
+  --clr-bg-0: #080707;
+  --clr-bg-1: #0d0d0d;
+  --clr-bg-2: #141414;
+  --clr-bg-3: #1c1a1a;
+  --clr-surface: rgba(22, 20, 20, 0.85);
+  --clr-surface-hover: rgba(32, 28, 28, 0.9);
+  --clr-border: rgba(200, 168, 95, 0.12);
+  --clr-border-active: rgba(200, 168, 95, 0.5);
+
+  --clr-gold: #c8a85f;
+  --clr-gold-light: #e0c97a;
+  --clr-gold-dim: rgba(200, 168, 95, 0.2);
+  --clr-violet: #3d2a5c;
+  --clr-violet-glow: rgba(61, 42, 92, 0.4);
+
+  --clr-text-primary: #f0ece4;
+  --clr-text-secondary: #8a8276;
+  --clr-text-muted: #4a4540;
+
+  --font-sans: 'Outfit', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 999px;
+
+  --shadow-gold: 0 0 20px rgba(200, 168, 95, 0.08);
+  --shadow-panel: 0 8px 40px rgba(0, 0, 0, 0.6);
+
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ======= RESET & BASE ======= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--clr-bg-0);
+  color: var(--clr-text-primary);
+  min-height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root { height: 100vh; display: flex; }
+
+/* ======= SCROLLBAR ======= */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--clr-gold-dim); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--clr-border-active); }
+
+/* ======= TYPOGRAPHY ======= */
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 300; letter-spacing: 0.04em; }
+h1 { font-size: 2.8rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.2rem; }
+p { line-height: 1.7; color: var(--clr-text-secondary); }
+
+/* ======= GLASS PANEL ======= */
+.glass {
+  background: var(--clr-surface);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+}
+
+/* ======= BUTTONS ======= */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--clr-gold) 0%, var(--clr-gold-light) 100%);
+  color: #0d0b08;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 20px rgba(200, 168, 95, 0.25);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(200, 168, 95, 0.4);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--clr-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 400;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-ghost:hover {
+  color: var(--clr-gold);
+  border-color: var(--clr-border-active);
+  background: var(--clr-gold-dim);
+}
+
+/* ======= INPUTS ======= */
+.input-field {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--clr-bg-2);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  color: var(--clr-text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  transition: var(--transition);
+  outline: none;
+}
+.input-field::placeholder { color: var(--clr-text-muted); }
+.input-field:focus {
+  border-color: var(--clr-gold);
+  box-shadow: 0 0 0 3px var(--clr-gold-dim);
+}
+
+/* ======= DIVIDER ======= */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--clr-border);
+  margin: 16px 0;
+}
+
+/* ======= APP LAYOUT ======= */
+.app-layout {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--clr-bg-0);
+}
+
+.app-main {
+  flex: 1;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ======= GOLD LABEL ======= */
+.label-gold {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-gold);
+}
+
+/* ======= NOISE TEXTURE OVERLAY ======= */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 9999;
+}

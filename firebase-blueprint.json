@@ -1,0 +1,229 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "The elite member profile in the FORTUNA network.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "displayName": { "type": "string", "description": "Full name of the member" },
+        "email": { "type": "string", "format": "email" },
+        "primaryField": { "type": "string", "description": "Professional field (e.g. Sales, Finance)" },
+        "nicheGroup": { "type": "string", "enum": ["Sales & Marketing", "Media & Advertising", "Finance & Trading", "Law", "Real Estate", "Trades & Construction", "Hospitality"] },
+        "company": { "type": "string" },
+        "assetIBring": { "type": "string" },
+        "connectionISeeking": { "type": "string" },
+        "social": { "type": "string" },
+        "avatar": { "type": "string", "description": "URL of the member's profile picture" },
+        "bio": { "type": "string", "description": "Short description about the member" },
+        "onboardingComplete": { "type": "boolean" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "status": { "type": "string", "enum": ["active", "hold", "banned"] },
+        "followersCount": { "type": "number" },
+        "followingCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "email", "primaryField"]
+    },
+    "Follow": {
+      "title": "User Follow",
+      "description": "A record of one user following another.",
+      "type": "object",
+      "properties": {
+        "followerId": { "type": "string" },
+        "followingId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["followerId", "followingId", "createdAt"]
+    },
+    "Conversation": {
+      "title": "Direct Message Conversation",
+      "description": "A private chat between two users.",
+      "type": "object",
+      "properties": {
+        "participants": { "type": "array", "items": { "type": "string" } },
+        "lastMessage": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["participants", "updatedAt"]
+    },
+    "DirectMessage": {
+      "title": "Direct Message",
+      "description": "A private message within a conversation.",
+      "type": "object",
+      "properties": {
+        "senderId": { "type": "string" },
+        "receiverId": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["senderId", "receiverId", "text", "createdAt"]
+    },
+    "Post": {
+      "title": "Network Post",
+      "description": "A post shared in the global feed.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "authorUid": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorHandle": { "type": "string" },
+        "avatar": { "type": "string" },
+        "content": { "type": "string" },
+        "nicheGroup": { "type": "string", "enum": ["Sales & Marketing", "Media & Advertising", "Finance & Trading", "Law", "Real Estate", "Trades & Construction", "Hospitality"] },
+        "likesCount": { "type": "number" },
+        "attachments": { "type": "array", "items": { "type": "string" }, "description": "URLs for images or other media" },
+        "followersCount": { "type": "number" },
+        "isOfficial": { "type": "boolean" },
+        "isArchived": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["authorUid", "content", "createdAt"]
+    },
+    "Like": {
+      "title": "Post Like",
+      "description": "A record of a user liking a post.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "postId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "postId", "createdAt"]
+    },
+    "Message": {
+      "title": "Chat Message",
+      "description": "A message sent in a specific room.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "primaryField": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "text", "createdAt"]
+    },
+    "NetworkFile": {
+      "title": "Network Resource File",
+      "description": "A file uploaded to the network resources.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "size": { "type": "number" },
+        "content": { "type": "string", "description": "Base64 encoded content" },
+        "folderId": { "type": "string", "description": "ID of the parent folder" },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "mimeType": { "type": "string" },
+        "isArchived": { "type": "boolean" }
+      },
+      "required": ["name", "type", "size", "ownerId", "createdAt"]
+    },
+    "Folder": {
+      "title": "Network Folder",
+      "description": "A folder for organizing network resources.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "parentId": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "isArchived": { "type": "boolean" }
+      },
+      "required": ["name", "ownerId", "createdAt"]
+    },
+    "EvidenceLedger": {
+      "title": "Evidence Ledger",
+      "description": "Encrypted investigation data compiled by Administrative Auditors.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "agentId": { "type": "string" },
+        "violationType": { "type": "string" },
+        "evidence": { "type": "string" },
+        "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "agentId", "evidence", "createdAt"]
+    },
+    "ActionProposal": {
+      "title": "Action Proposal",
+      "description": "Agent-generated action awaiting authorization.",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["CONNECTION_PROPOSAL", "POLICY_ALIGNMENT", "PROVISIONAL_HOLD", "THREAD_EXPULSION", "BAN_INITIATION"] },
+        "proposerId": { "type": "string" },
+        "affectedUserId": { "type": "string" },
+        "data": { "type": "object" },
+        "status": { "type": "string", "enum": ["pending", "authorized", "rejected", "executed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "proposerId", "status", "createdAt"]
+    },
+    "SystemSnapshot": {
+      "title": "System Snapshot",
+      "description": "State snapshot for reversibility.",
+      "type": "object",
+      "properties": {
+        "actionId": { "type": "string" },
+        "preState": { "type": "object" },
+        "postState": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["actionId", "preState", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Individual member profiles."
+    },
+    "posts/{postId}": {
+      "schema": "Post",
+      "description": "Global feed posts."
+    },
+    "likes/{likeId}": {
+      "schema": "Like",
+      "description": "Post likes tracking."
+    },
+    "follows/{followId}": {
+      "schema": "Follow",
+      "description": "User follow tracking."
+    },
+    "conversations/{conversationId}": {
+      "schema": "Conversation",
+      "description": "Direct message conversations."
+    },
+    "conversations/{conversationId}/messages/{messageId}": {
+      "schema": "DirectMessage",
+      "description": "Messages within a conversation."
+    },
+    "rooms/{roomId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages within a specific chat room."
+    },
+    "network_files/{fileId}": {
+      "schema": "NetworkFile",
+      "description": "Files uploaded to the network."
+    },
+    "folders/{folderId}": {
+      "schema": "Folder",
+      "description": "Folders for organizing files."
+    },
+    "evidence_ledger/{evidenceId}": {
+      "schema": "EvidenceLedger",
+      "description": "Private investigation records."
+    },
+    "action_proposals/{proposalId}": {
+      "schema": "ActionProposal",
+      "description": "Pending agent actions."
+    },
+    "system_snapshots/{snapshotId}": {
+      "schema": "SystemSnapshot",
+      "description": "State snapshots for undo."
+    }
+  }
+}

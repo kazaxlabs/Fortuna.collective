@@ -1,0 +1,332 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: {userId} (matches request.auth.uid)
+    // Fields:
+    //   - uid: string (required) - Firebase Auth UID
+    //   - displayName: string (required) - Full name
+    //   - email: string (required, email format) - Member email
+    //   - primaryField: string (required) - Professional field
+    //   - company: string (optional)
+    //   - assetIBring: string (optional)
+    //   - connectionISeeking: string (optional)
+    //   - onboardingComplete: bool (optional)
+    //   - role: string (enum: 'user', 'admin')
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: posts
+    // Document ID: auto-generated
+    // Fields:
+    //   - authorUid: string (required)
+    //   - authorName: string (required)
+    //   - authorHandle: string (required)
+    //   - avatar: string (optional)
+    //   - content: string (required, < 500 chars)
+    //   - likesCount: number (optional)
+    //   - followersCount: number (optional)
+    //   - isOfficial: bool (optional)
+    //   - isArchived: bool (optional)
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: likes
+    // Document ID: {userId}_{postId}
+    // Fields:
+    //   - uid: string (required)
+    //   - postId: string (required)
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: follows
+    // Document ID: {followerId}_{followingId}
+    // Fields:
+    //   - followerId: string (required)
+    //   - followingId: string (required)
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: conversations
+    // Document ID: auto-generated or composite
+    // Fields:
+    //   - participants: list (required)
+    //   - lastMessage: string (optional)
+    //   - updatedAt: timestamp (required)
+    //
+    // Collection: conversations/{conversationId}/messages
+    // Document ID: auto-generated
+    // Fields:
+    //   - senderId: string (required)
+    //   - receiverId: string (required)
+    //   - text: string (required)
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: rooms/{roomId}/messages
+    // Document ID: auto-generated
+    // Fields:
+    //   - uid: string (required)
+    //   - displayName: string (required)
+    //   - primaryField: string (optional)
+    //   - text: string (required, < 1000 chars)
+    //   - createdAt: timestamp (required)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        (
+          (request.auth.token.email == "kazaxlabs@gmail.com" && request.auth.token.email_verified == true) ||
+          (request.auth.token.email == "kaza1@fortuna.admin") ||
+          (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')
+        );
+    }
+    
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function isValidOptionalString(data, field, minLen, maxLen) {
+      return !(field in data) || (data[field] is string && data[field].size() >= minLen && data[field].size() <= maxLen);
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidUser(data) {
+      return hasOnlyAllowedFields(['uid', 'displayName', 'email', 'primaryField', 'company', 'assetIBring', 'connectionISeeking', 'social', 'avatar', 'bio', 'onboardingComplete', 'role', 'createdAt', 'followersCount', 'followingCount', 'status', 'nicheGroup']) &&
+             data.uid is string &&
+             data.displayName is string && data.displayName.size() < 100 &&
+             isValidEmail(data.email) &&
+             data.primaryField is string &&
+             isValidOptionalString(data, 'company', 0, 200) &&
+             isValidOptionalString(data, 'assetIBring', 0, 1000) &&
+             isValidOptionalString(data, 'connectionISeeking', 0, 1000) &&
+             isValidOptionalString(data, 'social', 0, 500) &&
+             isValidOptionalString(data, 'avatar', 0, 1000) &&
+             isValidOptionalString(data, 'bio', 0, 1000) &&
+             isValidOptionalString(data, 'nicheGroup', 0, 100) &&
+             (!('onboardingComplete' in data) || data.onboardingComplete is bool) &&
+             (data.role in ['user', 'admin']) &&
+             (!('status' in data) || data.status in ['active', 'hold', 'banned']) &&
+             (!('followersCount' in data) || data.followersCount is number) &&
+             (!('followingCount' in data) || data.followingCount is number) &&
+             (!('createdAt' in data) || data.createdAt is timestamp);
+    }
+
+    function isValidPost(data) {
+      return hasOnlyAllowedFields(['authorUid', 'authorName', 'authorHandle', 'avatar', 'content', 'likesCount', 'attachments', 'followersCount', 'isOfficial', 'createdAt', 'category', 'isArchived']) &&
+             data.authorUid is string && data.authorUid == request.auth.uid &&
+             data.authorName is string && data.authorName.size() > 0 &&
+             data.authorHandle is string &&
+             data.content is string && data.content.size() > 0 && data.content.size() < 500 &&
+             (!('likesCount' in data) || data.likesCount is number) &&
+             (!('attachments' in data) || (data.attachments is list && data.attachments.size() <= 10)) &&
+             (!('isArchived' in data) || data.isArchived is bool) &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidLike(data) {
+      return hasOnlyAllowedFields(['uid', 'postId', 'createdAt']) &&
+             data.uid == request.auth.uid &&
+             data.postId is string &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidCounterUpdate(postId) {
+      let affectedKeys = request.resource.data.diff(resource.data).affectedKeys();
+      let isOnlyLikesCount = affectedKeys.hasOnly(['likesCount']);
+      let diff = request.resource.data.likesCount - (resource.data.likesCount || 0);
+      let likeDocPath = /databases/$(database)/documents/likes/$(request.auth.uid + '_' + postId);
+      
+      return isOnlyLikesCount && 
+             (diff == 1 || diff == -1) &&
+             (
+               (diff == 1 && !exists(likeDocPath) && getAfter(likeDocPath) != null) ||
+               (diff == -1 && exists(likeDocPath) && getAfter(likeDocPath) == null)
+             );
+    }
+
+    function isValidFollow(data) {
+      return hasOnlyAllowedFields(['followerId', 'followingId', 'createdAt']) &&
+             data.followerId == request.auth.uid &&
+             data.followerId != data.followingId &&
+             data.followingId is string &&
+             exists(/databases/$(database)/documents/users/$(data.followingId)) &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidUserCounterUpdate(userId) {
+      let affectedKeys = request.resource.data.diff(resource.data).affectedKeys();
+      let isFollowersUpdate = affectedKeys.hasOnly(['followersCount']);
+      let isFollowingUpdate = affectedKeys.hasOnly(['followingCount']);
+      
+      let diffFollowers = isFollowersUpdate ? request.resource.data.followersCount - (resource.data.followersCount || 0) : 0;
+      let followDocPath = /databases/$(database)/documents/follows/$(request.auth.uid + '_' + userId);
+      
+      let followersValid = isFollowersUpdate && (diffFollowers == 1 || diffFollowers == -1) && (
+        (diffFollowers == 1 && !exists(followDocPath) && existsAfter(followDocPath)) ||
+        (diffFollowers == -1 && exists(followDocPath) && !existsAfter(followDocPath))
+      );
+      
+      let diffFollowing = isFollowingUpdate ? request.resource.data.followingCount - (resource.data.followingCount || 0) : 0;
+      let followingValid = isFollowingUpdate && isOwner(userId) && (diffFollowing == 1 || diffFollowing == -1);
+      
+      return followersValid || followingValid;
+    }
+
+    function isValidConversation(data) {
+      return hasOnlyAllowedFields(['participants', 'lastMessage', 'updatedAt', 'type', 'createdAt']) &&
+             data.participants is list && data.participants.size() == 2 &&
+             (request.auth.uid in data.participants || isAdmin()) &&
+             data.updatedAt is timestamp;
+    }
+
+    function isValidDirectMessage(data) {
+      return hasOnlyAllowedFields(['senderId', 'receiverId', 'text', 'createdAt']) &&
+             (data.senderId == request.auth.uid || (isAdmin() && data.senderId == 'system')) &&
+             data.receiverId is string &&
+             data.text is string && data.text.size() > 0 && data.text.size() < 2000 &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidMessage(data) {
+      return hasOnlyAllowedFields(['uid', 'displayName', 'primaryField', 'text', 'createdAt']) &&
+             (data.uid == request.auth.uid || (isAdmin() && data.uid == 'system')) &&
+             data.displayName is string && data.displayName.size() > 0 && data.displayName.size() < 100 &&
+             data.text is string && data.text.size() > 0 && data.text.size() < 1000 &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidNetworkFile(data) {
+      return hasOnlyAllowedFields(['name', 'type', 'size', 'content', 'folderId', 'ownerId', 'createdAt', 'mimeType', 'isArchived']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 255 &&
+             data.type is string && data.type.size() < 50 &&
+             data.size is number && data.size <= 1048576 && 
+             (!('content' in data) || (data.content is string && data.content.size() < 1048576)) &&
+             (!('folderId' in data) || (data.folderId == null || (data.folderId is string && data.folderId.size() < 100))) &&
+             data.ownerId == request.auth.uid &&
+             data.createdAt is timestamp &&
+             (!('isArchived' in data) || data.isArchived is bool) &&
+             (!('mimeType' in data) || (data.mimeType is string && data.mimeType.size() < 100));
+    }
+
+    function isValidFolder(data) {
+      return hasOnlyAllowedFields(['name', 'parentId', 'ownerId', 'createdAt', 'isArchived']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             (!('parentId' in data) || (data.parentId == null || (data.parentId is string && data.parentId.size() < 100))) &&
+             data.ownerId == request.auth.uid &&
+             data.createdAt is timestamp &&
+             (!('isArchived' in data) || data.isArchived is bool);
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(userId) && isValidUser(request.resource.data) && (request.resource.data.role == 'user' || isAdmin());
+      allow update: if (
+                        isOwner(userId) && 
+                        isValidUser(request.resource.data) && 
+                        request.resource.data.createdAt == resource.data.createdAt &&
+                        (request.resource.data.role == resource.data.role || isAdmin()) &&
+                        !request.resource.data.diff(resource.data).affectedKeys().hasAny(['followersCount', 'followingCount'])
+                       ) ||
+                       isValidUserCounterUpdate(userId) ||
+                       (isAdmin() && isValidUser(request.resource.data));
+    }
+
+    match /posts/{postId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isValidPost(request.resource.data);
+      allow update: if isAuthenticated() && 
+                      (
+                        ((resource.data.authorUid == request.auth.uid || isAdmin()) && isValidPost(request.resource.data)) ||
+                        isValidCounterUpdate(postId)
+                      );
+      allow delete: if isAuthenticated() && (resource.data.authorUid == request.auth.uid || isAdmin());
+    }
+
+    match /likes/{likeId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && likeId == request.auth.uid + '_' + request.resource.data.postId && isValidLike(request.resource.data);
+      allow delete: if isAuthenticated() && likeId == request.auth.uid + '_' + resource.data.postId && resource.data.uid == request.auth.uid;
+    }
+
+    match /follows/{followId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && followId == request.auth.uid + '_' + request.resource.data.followingId && isValidFollow(request.resource.data);
+      allow delete: if isAuthenticated() && followId == request.auth.uid + '_' + resource.data.followingId && resource.data.followerId == request.auth.uid;
+    }
+
+    match /conversations/{conversationId} {
+      allow read: if isAuthenticated() && (request.auth.uid in resource.data.participants || isAdmin());
+      allow create: if isAuthenticated() && request.auth.uid in request.resource.data.participants && isValidConversation(request.resource.data);
+      allow update: if isAuthenticated() && (request.auth.uid in resource.data.participants || isAdmin()) && isValidConversation(request.resource.data);
+      
+      match /messages/{messageId} {
+        allow read: if isAuthenticated() && request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants;
+        allow create: if isAuthenticated() && request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants && isValidDirectMessage(request.resource.data);
+      }
+    }
+
+    match /rooms/{roomId}/messages/{messageId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isValidMessage(request.resource.data);
+      allow delete: if isAuthenticated() && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
+    match /network_files/{fileId} {
+      allow read: if isAuthenticated() && (resource.data.ownerId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && isValidNetworkFile(request.resource.data);
+      allow update: if isAuthenticated() && isOwner(resource.data.ownerId) && isValidNetworkFile(request.resource.data);
+      allow delete: if isAuthenticated() && (resource.data.ownerId == request.auth.uid || isAdmin());
+    }
+
+    match /folders/{folderId} {
+      allow read: if isAuthenticated() && (resource.data.ownerId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && isValidFolder(request.resource.data);
+      allow update: if isAuthenticated() && isOwner(resource.data.ownerId) && isValidFolder(request.resource.data);
+      allow delete: if isAuthenticated() && (resource.data.ownerId == request.auth.uid || isAdmin());
+    }
+
+    match /evidence_ledger/{evidenceId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /action_proposals/{proposalId} {
+      allow read: if isAuthenticated() && (isAdmin() || resource.data.affectedUserId == request.auth.uid);
+      allow create: if isAdmin(); // Agents acting as admin
+      allow update: if isAuthenticated() && 
+                      (
+                        isAdmin() || 
+                        (resource.data.affectedUserId == request.auth.uid && 
+                         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']) &&
+                         request.resource.data.status in ['authorized', 'rejected'])
+                      );
+    }
+
+    match /system_snapshots/{snapshotId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
