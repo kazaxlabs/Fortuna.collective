@@ -217,7 +217,7 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
     <div className="flex flex-col h-full bg-[var(--color-bg)] text-[var(--color-text)] overflow-y-auto no-scrollbar">
       {/* Tab Navigation */}
       {isHomeCategory && (
-        <div className="sticky top-0 z-10 bg-[var(--color-bg)] border-b border-[var(--color-shadow-dark)]/10 flex w-full p-4 gap-4">
+        <div className="sticky top-0 z-10 bg-[var(--color-bg)]/90 backdrop-blur-xl border-b border-[var(--color-shadow-dark)]/10 flex w-full p-4 gap-4">
           <div className="flex w-full neu-concave rounded-3xl p-1.5 overflow-hidden">
             {HOME_TABS.map((tab) => (
               <button
@@ -236,16 +236,17 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
         </div>
       )}
 
-      <div className="max-w-2xl mx-auto w-full space-y-16 p-8 pb-32">
+      <div className="max-w-2xl mx-auto w-full space-y-8 sm:space-y-16 p-4 sm:p-8 pb-32">
         {/* Header if filtered (not home category) */}
         {!isHomeCategory && meta && (
-          <div className="flex items-center gap-8 pb-10 border-b border-[var(--color-shadow-dark)]/10">
-            <div className={`w-16 h-16 rounded-3xl neu-convex flex items-center justify-center text-[var(--color-accent)]`}>
-              <meta.icon size={32} />
+          <div className="flex items-center gap-4 sm:gap-8 pb-6 sm:pb-10 border-b border-[var(--color-shadow-dark)]/10">
+            <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl neu-convex flex items-center justify-center text-[var(--color-accent)]`}>
+              <meta.icon size={24} className="sm:hidden" />
+              <meta.icon size={32} className="hidden sm:block" />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-h2 tracking-tight text-[var(--color-text)] uppercase">{meta.label}</h1>
-              <p className="text-label font-black uppercase tracking-[0.2em] mt-1 text-[var(--color-text-muted)]">
+              <h1 className="text-xl sm:text-h2 tracking-tight text-[var(--color-text)] uppercase">{meta.label}</h1>
+              <p className="text-[9px] sm:text-label font-black uppercase tracking-[0.2em] mt-1 text-[var(--color-text-muted)]">
                 {effectiveRoomId === 'rules' ? 'Official' : 
                  ['announcements', 'introductions'].includes(effectiveRoomId) ? 'System' : 
                  'Channel'}
@@ -256,14 +257,14 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
 
         {/* Create Post */}
         {canPost && (
-          <div className="p-10 neu-convex rounded-[3rem] space-y-8">
-            <div className="flex gap-6">
-              <div className="flex flex-col items-center gap-6 shrink-0">
-                <div className="w-14 h-14 rounded-[1.5rem] neu-concave flex items-center justify-center overflow-hidden">
+          <div className="p-6 sm:p-10 neu-convex rounded-[2.5rem] sm:rounded-[3rem] space-y-6 sm:space-y-8">
+            <div className="flex gap-4 sm:gap-6">
+              <div className="flex flex-col items-center gap-4 sm:gap-6 shrink-0">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-[1.5rem] neu-concave flex items-center justify-center overflow-hidden">
                   {profile?.avatar ? (
                     <img src={profile.avatar} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                   ) : (
-                    <User size={28} className="text-[var(--color-text)] opacity-20" />
+                    <User size={24} className="text-[var(--color-text)] opacity-20" />
                   )}
                 </div>
                 <input
@@ -275,16 +276,16 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
                 />
                 <button 
                   onClick={() => fileInputRef.current?.click()}
-                  className="p-4 text-[var(--color-text)] opacity-40 hover:opacity-100 transition-all neu-button rounded-2xl"
+                  className="p-3 sm:p-4 text-[var(--color-text)] opacity-40 hover:opacity-100 transition-all neu-button rounded-xl sm:rounded-2xl"
                   title="Attach Photo"
                 >
-                  <Plus size={22} />
+                  <Plus size={20} />
                 </button>
               </div>
-              <div className="flex-1 space-y-8">
+              <div className="flex-1 space-y-6 sm:space-y-8">
                 <textarea
                   placeholder={effectiveRoomId === 'announcements' ? "Compose announcement..." : "What's on your mind?"}
-                  className="w-full bg-transparent border-none outline-none text-body-lg text-[var(--color-text)] placeholder-[var(--color-text-muted)] placeholder:opacity-40 resize-none py-2 tracking-tight leading-relaxed font-medium"
+                  className="w-full bg-transparent border-none outline-none text-base sm:text-body-lg text-[var(--color-text)] placeholder-[var(--color-text-muted)] placeholder:opacity-40 resize-none py-1 sm:py-2 tracking-tight leading-relaxed font-medium"
                   rows={2}
                   value={newPost}
                   onChange={(e) => setNewPost(e.target.value)}
@@ -293,22 +294,22 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
                 {/* Attachments Preview */}
                 <AnimatePresence>
                   {attachments.length > 0 && (
-                    <div className="flex flex-wrap gap-4 pt-6 border-t border-[var(--color-shadow-dark)]/10">
+                    <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-[var(--color-shadow-dark)]/10">
                       {attachments.map((url, index) => (
                         <motion.div 
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.9 }}
                           key={index} 
-                          className="relative group rounded-[2rem] overflow-hidden neu-convex p-1"
+                          className="relative group rounded-2xl sm:rounded-[2rem] overflow-hidden neu-convex p-0.5 sm:p-1"
                         >
-                          <img src={url} alt="Draft" className="w-24 h-24 object-cover rounded-[1.5rem]" referrerPolicy="no-referrer" />
+                          <img src={url} alt="Draft" className="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-xl sm:rounded-[1.5rem]" referrerPolicy="no-referrer" />
                           <button
                             type="button"
                             onClick={() => removeAttachment(index)}
-                            className="absolute top-2 right-2 p-1.5 bg-black/50 backdrop-blur-md rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute top-1 right-1 p-1 bg-black/50 backdrop-blur-md rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity"
                           >
-                            <X size={14} />
+                            <X size={12} />
                           </button>
                         </motion.div>
                       ))}
@@ -316,21 +317,21 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
                   )}
                 </AnimatePresence>
 
-                <div className="flex justify-between items-center pt-8 border-t border-[var(--color-shadow-dark)]/10">
-                  <div className="flex items-center gap-4">
-                    <label className="text-label font-black uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-0 pt-6 sm:pt-8 border-t border-[var(--color-shadow-dark)]/10">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <label className="text-[9px] sm:text-label font-black uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
                       Channels:
                     </label>
                     {isPillarChannel ? (
-                      <div className="px-4 py-2 text-label text-[var(--color-accent)] font-black uppercase tracking-widest italic flex items-center gap-2">
-                        <Tag size={12} strokeWidth={3} />
+                      <div className="px-3 py-1.5 text-[9px] sm:text-label text-[var(--color-accent)] font-black uppercase tracking-widest italic flex items-center gap-2">
+                        <Tag size={10} strokeWidth={3} />
                         {effectiveRoomId}
                       </div>
                     ) : (
                       <select 
                         value={selectedNiche}
                         onChange={(e) => setSelectedNiche(e.target.value)}
-                        className="neu-concave border-none rounded-xl px-4 py-2 text-label text-[var(--color-text)] font-bold outline-none cursor-pointer"
+                        className="neu-concave border-none rounded-xl px-3 py-1.5 text-[9px] sm:text-label text-[var(--color-text)] font-bold outline-none cursor-pointer"
                       >
                         {Object.values(NicheGroup).map(group => (
                           <option key={group} value={group}>{group}</option>
@@ -341,7 +342,7 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
                   <button 
                     onClick={handlePost}
                     disabled={loading || !newPost.trim()}
-                    className="neu-button-accent text-white px-10 py-4 rounded-3xl text-label font-black uppercase tracking-[0.2em] transition-all disabled:opacity-50 active:scale-95 shadow-lg"
+                    className="w-full sm:w-auto neu-button-accent text-white px-10 py-4 rounded-2xl sm:rounded-3xl text-label font-black uppercase tracking-[0.2em] transition-all disabled:opacity-50 active:scale-95 shadow-lg"
                   >
                     {loading ? 'Posting...' : 'Post'}
                   </button>
@@ -385,31 +386,31 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   key={post.id} 
-                  className="neu-convex rounded-[3.5rem] p-10 hover:translate-y-[-2px] transition-transform duration-500 relative group"
+                  className="neu-convex rounded-[2.5rem] sm:rounded-[3.5rem] p-6 sm:p-10 hover:translate-y-[-2px] transition-transform duration-500 relative group"
                 >
-                  <div className="flex items-center justify-between mb-10">
+                  <div className="flex items-center justify-between mb-6 sm:mb-10">
                     <button 
                       onClick={() => onNavigateToProfile?.(post.authorUid)}
-                      className="flex items-center gap-6 hover:opacity-80 transition-opacity text-left"
+                      className="flex items-center gap-4 sm:gap-6 hover:opacity-80 transition-opacity text-left"
                     >
-                      <div className="w-16 h-16 rounded-2xl neu-concave flex items-center justify-center overflow-hidden shrink-0">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl neu-concave flex items-center justify-center overflow-hidden shrink-0">
                         {post.avatar ? (
                           <img src={post.avatar} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                         ) : (
-                          <span className="text-h3 text-[var(--color-text-muted)] opacity-20">{getInitial(post.authorName)}</span>
+                          <span className="text-xl sm:text-h3 text-[var(--color-text-muted)] opacity-20">{getInitial(post.authorName)}</span>
                         )}
                       </div>
                       <div className="flex flex-col">
-                        <div className="flex items-center gap-3">
-                          <span className="text-h3 text-[var(--color-text)] tracking-tight leading-none uppercase">{post.authorName}</span>
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <span className="text-base sm:text-h3 text-[var(--color-text)] tracking-tight leading-none uppercase">{post.authorName}</span>
                           {post.nicheGroup && (
-                            <div className="flex items-center gap-2 px-3 py-1 neu-concave text-[var(--color-accent)] rounded-full text-label font-black uppercase tracking-widest scale-90">
-                              <Tag size={10} strokeWidth={3} />
+                            <div className="flex items-center gap-2 px-2 sm:px-3 py-1 neu-concave text-[var(--color-accent)] rounded-full text-[8px] sm:text-label font-black uppercase tracking-widest scale-90 sm:scale-100">
+                              <Tag size={8} className="sm:w-[10px] sm:h-[10px]" strokeWidth={3} />
                               {post.nicheGroup}
                             </div>
                           )}
                         </div>
-                        <span className="text-label text-[var(--color-text-muted)] font-black uppercase tracking-widest mt-1.5 opacity-60">
+                        <span className="text-[9px] sm:text-label text-[var(--color-text-muted)] font-black uppercase tracking-widest mt-1 sm:mt-1.5 opacity-60">
                           {post.authorUid === 'admin' ? 'Admin' : 'Member'}
                         </span>
                       </div>
@@ -419,9 +420,9 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
                       <div className="relative">
                         <button 
                           onClick={() => setActiveMenuId(activeMenuId === post.id ? null : post.id)}
-                          className="p-4 text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-all neu-button rounded-2xl"
+                          className="p-3 sm:p-4 text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-all neu-button rounded-xl sm:rounded-2xl"
                         >
-                          <MoreVertical size={20} strokeWidth={2.5} />
+                          <MoreVertical size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
                         </button>
                         
                         <AnimatePresence>
@@ -430,20 +431,20 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
                               initial={{ opacity: 0, scale: 0.95, y: 10 }}
                               animate={{ opacity: 1, scale: 1, y: 0 }}
                               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                              className="absolute right-0 mt-5 w-60 neu-convex rounded-3xl z-20 overflow-hidden shadow-2xl"
+                              className="absolute right-0 mt-3 sm:mt-5 w-48 sm:w-60 neu-convex rounded-2xl sm:rounded-3xl z-20 overflow-hidden shadow-2xl"
                             >
                               <button 
                                 onClick={() => handleArchivePost(post.id)}
-                                className="w-full flex items-center gap-4 px-6 py-5 text-label font-black uppercase tracking-widest text-[var(--color-text-muted)] hover:text-[#FF9500] hover:neu-concave transition-all"
+                                className="w-full flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-5 text-[9px] sm:text-label font-black uppercase tracking-widest text-[var(--color-text-muted)] hover:text-[#FF9500] hover:neu-concave transition-all"
                               >
-                                <Archive size={18} strokeWidth={2.5} />
+                                <Archive size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={2.5} />
                                 Archive
                               </button>
                               <button 
                                 onClick={() => handleDeletePost(post.id)}
-                                className="w-full flex items-center gap-4 px-6 py-5 text-label font-black uppercase tracking-widest text-[var(--color-text-muted)] hover:text-[#FF3B30] hover:neu-concave transition-all border-t border-[var(--color-shadow-dark)]/5"
+                                className="w-full flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-5 text-[9px] sm:text-label font-black uppercase tracking-widest text-[var(--color-text-muted)] hover:text-[#FF3B30] hover:neu-concave transition-all border-t border-[var(--color-shadow-dark)]/5"
                               >
-                                <Trash2 size={18} strokeWidth={2.5} />
+                                <Trash2 size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={2.5} />
                                 Delete
                               </button>
                             </motion.div>
@@ -453,19 +454,19 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
                     )}
                   </div>
                   
-                  <div className="space-y-10 mb-12">
-                    <p className="text-body-lg text-[var(--color-text)] leading-[1.6] whitespace-pre-wrap tracking-normal font-medium opacity-90">
+                  <div className="space-y-6 sm:space-y-10 mb-8 sm:mb-12">
+                    <p className="text-sm sm:text-body-lg text-[var(--color-text)] leading-[1.6] whitespace-pre-wrap tracking-normal font-medium opacity-90">
                       {post.content}
                     </p>
                     
                     {post.attachments && post.attachments.length > 0 && (
-                      <div className={`grid gap-6 ${post.attachments.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                      <div className={`grid gap-4 sm:gap-6 ${post.attachments.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
                         {post.attachments.map((url: string, idx: number) => (
-                          <div key={idx} className="rounded-[2.5rem] overflow-hidden neu-concave p-2">
+                          <div key={idx} className="rounded-2xl sm:rounded-[2.5rem] overflow-hidden neu-concave p-1 sm:p-2">
                             <img 
                               src={url} 
                               alt="" 
-                              className="w-full h-auto max-h-[600px] object-cover rounded-[2rem]" 
+                              className="w-full h-auto max-h-[400px] sm:max-h-[600px] object-cover rounded-xl sm:rounded-[2rem]" 
                               referrerPolicy="no-referrer"
                             />
                           </div>
@@ -474,27 +475,27 @@ export default function Feed({ roomId, onNavigateToProfile }: FeedProps) {
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between pt-10 border-t border-[var(--color-shadow-dark)]/10">
-                    <div className="flex items-center gap-10">
+                  <div className="flex items-center justify-between pt-6 sm:pt-10 border-t border-[var(--color-shadow-dark)]/10">
+                    <div className="flex items-center gap-6 sm:gap-10">
                       <button 
                         onClick={() => handleLike(post.id)}
-                        className={`flex items-center gap-3 transition-all ${likedPosts.has(post.id) ? 'text-[#FF2D55]' : 'text-[var(--color-text-muted)] hover:text-[#FF2D55]'}`}
+                        className={`flex items-center gap-2 sm:gap-3 transition-all ${likedPosts.has(post.id) ? 'text-[#FF2D55]' : 'text-[var(--color-text-muted)] hover:text-[#FF2D55]'}`}
                       >
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${likedPosts.has(post.id) ? 'neu-concave' : 'neu-button'}`}>
-                          <Heart size={20} strokeWidth={2.5} fill={likedPosts.has(post.id) ? 'currentColor' : 'none'} className={likedPosts.has(post.id) ? 'scale-110' : ''} />
+                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all ${likedPosts.has(post.id) ? 'neu-concave' : 'neu-button'}`}>
+                          <Heart size={18} strokeWidth={2.5} fill={likedPosts.has(post.id) ? 'currentColor' : 'none'} className={`sm:w-5 sm:h-5 ${likedPosts.has(post.id) ? 'scale-110' : ''}`} />
                         </div>
-                        <span className="text-body font-black italic">{post.likesCount || 0}</span>
+                        <span className="text-sm sm:text-body font-black italic">{post.likesCount || 0}</span>
                       </button>
                       
-                      <div className="flex items-center gap-3 text-[var(--color-text-muted)]">
-                        <div className="w-12 h-12 rounded-xl neu-convex flex items-center justify-center">
-                          <Handshake size={20} strokeWidth={2.5} />
+                      <div className="flex items-center gap-2 sm:gap-3 text-[var(--color-text-muted)]">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl neu-convex flex items-center justify-center">
+                          <Handshake size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
                         </div>
-                        <span className="text-body font-black italic">{post.followersCount || 0}</span>
+                        <span className="text-sm sm:text-body font-black italic">{post.followersCount || 0}</span>
                       </div>
                     </div>
                     
-                    <div className="flex flex-col items-end gap-1.5 text-[var(--color-text-muted)] text-label font-black uppercase tracking-[0.2em] opacity-40">
+                    <div className="flex flex-col items-end gap-1.5 text-[var(--color-text-muted)] text-[8px] sm:text-label font-black uppercase tracking-[0.2em] opacity-40">
                       <span>{new Date(post.createdAt?.seconds * 1000 || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                       <span>Posted</span>
                     </div>

@@ -7,30 +7,36 @@ interface BottomNavProps {
 }
 
 const NAV_ITEMS = [
-  { id: 'feed', icon: Home, label: 'Newsstand' },
+  { id: 'feed', icon: Home, label: 'Home' },
   { id: 'search', icon: Search, label: 'Search' },
   { id: 'create', icon: Plus, label: 'Brief' },
-  { id: 'network', icon: Network, label: 'Circle' },
-  { id: 'notifications', icon: Bell, label: 'Intelligence' },
+  { id: 'network', icon: Network, label: 'Network' },
+  { id: 'notifications', icon: Bell, label: 'Notifications' },
 ];
 
 export default function BottomNav({ activeRoute, onRouteChange }: BottomNavProps) {
   return (
-    <div className="md:hidden fixed bottom-10 left-1/2 -translate-x-1/2 w-[90%] max-w-sm z-50">
-      <div className="bg-[var(--color-bg)] neu-convex rounded-full p-2 flex items-center justify-around gap-2 shadow-2xl border border-[var(--color-shadow-dark)]/5">
+    <div 
+      className="md:hidden fixed bottom-0 left-0 w-full z-50 px-4 pt-4 bg-gradient-to-t from-[var(--color-bg)] via-[var(--color-bg)]/80 to-transparent"
+      style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' }}
+    >
+      <div className="mx-auto max-w-sm bg-[var(--color-bg)]/90 backdrop-blur-2xl neu-convex rounded-[2.5rem] p-3 flex items-center justify-around gap-2 shadow-2xl border border-[var(--color-shadow-dark)]/10">
         {NAV_ITEMS.map((item) => {
           const isActive = activeRoute === item.id || (item.id === 'feed' && activeRoute.startsWith('feed'));
           return (
             <button
               key={item.id}
               onClick={() => onRouteChange(item.id)}
-              className={`flex-1 flex items-center justify-center py-4 rounded-full transition-all duration-300 active:scale-90 ${
+              className={`flex-1 flex flex-col items-center justify-center py-3 rounded-2xl transition-all duration-300 active:scale-90 ${
                 isActive 
                   ? 'neu-concave text-[var(--color-accent)]' 
-                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+                  : 'text-[var(--color-text-muted)] opacity-60'
               }`}
             >
-              <item.icon size={22} strokeWidth={2.5} />
+              <item.icon size={20} strokeWidth={isActive ? 3 : 2} />
+              <span className={`text-[8px] font-black uppercase tracking-widest mt-1 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+                {item.label}
+              </span>
             </button>
           );
         })}
@@ -38,8 +44,8 @@ export default function BottomNav({ activeRoute, onRouteChange }: BottomNavProps
           onClick={() => onRouteChange('profile')}
           className="p-1 rounded-full transition-all active:scale-90"
         >
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center overflow-hidden transition-all ${activeRoute === 'profile' ? 'neu-concave scale-90' : 'neu-convex'}`}>
-            <User size={20} strokeWidth={2.5} className={activeRoute === 'profile' ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-muted)]'} />
+          <div className={`w-11 h-11 rounded-2xl flex items-center justify-center overflow-hidden transition-all ${activeRoute === 'profile' ? 'neu-concave scale-90' : 'neu-convex'}`}>
+            <User size={20} strokeWidth={activeRoute === 'profile' ? 3 : 2} className={activeRoute === 'profile' ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-muted)] opacity-60'} />
           </div>
         </button>
       </div>

@@ -157,9 +157,7 @@ export default function UserNetwork({ onSelectUser, onMessageUser }: UserNetwork
         </AnimatePresence>
 
         {loading ? (
-          <div className="flex items-center justify-center py-40">
-            <div className="w-12 h-12 border-4 border-[var(--color-accent)] border-t-transparent rounded-full animate-spin shadow-[0_0_15px_var(--color-accent)]" />
-          </div>
+          <div className="flex items-center justify-center py-40 min-h-[40vh]" />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-20">
             {filteredUsers.map((user) => (

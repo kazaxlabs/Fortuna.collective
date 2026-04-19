@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion as Motion } from 'motion/react';
 import { ShieldCheck, Key, UserPlus, LogIn } from 'lucide-react';
 import { useAuth } from '../../context/useAuth';
@@ -11,6 +11,12 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
+
+  useEffect(() => {
+    setIsMobileDevice(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+  }, []);
 
   const handleGoogleLogin = async () => {
     setLoading(true);
@@ -41,7 +47,7 @@ export default function Login() {
   };
 
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-[var(--color-bg)] p-10 relative overflow-hidden">
+    <div className="h-full w-full flex items-center justify-center bg-[var(--color-bg)] p-10 relative overflow-hidden">
       <Motion.div 
         initial="hidden"
         animate="visible"
@@ -53,7 +59,7 @@ export default function Login() {
           <div className="w-24 h-24 rounded-[2rem] neu-convex flex items-center justify-center mb-10 transition-transform hover:scale-105 duration-500">
             <ShieldCheck size={48} strokeWidth={1} className="text-[var(--color-accent)]" />
           </div>
-          <h1 className="text-5xl font-extrabold text-[var(--color-text)] mb-4 tracking-tight">Inner Circle</h1>
+          <h1 className="text-5xl font-extrabold text-[var(--color-text)] mb-4 tracking-tight">fortuna collective</h1>
           <p className="text-[var(--color-text)] opacity-60 text-lg font-medium tracking-tight">Sign in to the network.</p>
         </div>
 
@@ -64,6 +70,11 @@ export default function Login() {
             className="w-full mb-8 p-5 neu-concave rounded-2xl text-[#FF3B30] text-sm text-center font-bold uppercase tracking-widest"
           >
             {error}
+            {isMobileDevice && error.includes('failed') && (
+              <p className="mt-2 text-[10px] normal-case tracking-normal opacity-80">
+                Try opening this app in a new tab if the window doesn't appear.
+              </p>
+            )}
           </Motion.div>
         )}
 

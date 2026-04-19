@@ -40,39 +40,39 @@ export default function ConversationsList({ onSelectConvo }: ConversationsListPr
 
   return (
     <div className="h-full bg-[var(--color-bg)] text-[var(--color-text)] flex flex-col overflow-y-auto no-scrollbar">
-      <div className="p-10 sm:p-14 space-y-12">
-        <div className="space-y-1">
-          <h1 className="text-4xl font-black tracking-tight text-[var(--color-text)] uppercase leading-none">Correspondence</h1>
-          <p className="text-[var(--color-text)] opacity-40 text-[10px] font-black uppercase tracking-[0.3em]">Secure direct channels.</p>
+      <div className="p-6 sm:p-14 space-y-8 sm:space-y-12">
+        <div className="space-y-1 text-center sm:text-left">
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text)] uppercase leading-none">Messages</h1>
+          <p className="text-[var(--color-text)] opacity-40 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em]">Secure Direct Channels</p>
         </div>
 
-        <div className="relative group neu-concave rounded-[2rem] p-1">
-          <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-[var(--color-text)] opacity-20" size={20} strokeWidth={2.5} />
+        <div className="relative group neu-concave rounded-2xl sm:rounded-[2rem] p-1">
+          <Search className="absolute left-5 sm:left-6 top-1/2 -translate-y-1/2 text-[var(--color-text)] opacity-20 sm:w-5 sm:h-5" size={18} strokeWidth={2.5} />
           <input
             type="text"
-            placeholder="Search correspondents..."
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-transparent border-none py-5 pl-16 pr-8 text-lg text-[var(--color-text)] outline-none placeholder-[var(--color-text)] placeholder:opacity-20 font-medium"
+            className="w-full bg-transparent border-none py-3.5 sm:py-5 pl-12 sm:pl-16 pr-6 sm:pr-8 text-sm sm:text-lg text-[var(--color-text)] outline-none placeholder-[var(--color-text)] placeholder:opacity-20 font-medium"
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-10 pb-20">
+        <div className="grid grid-cols-1 gap-6 sm:gap-10 pb-20">
           {conversations.length === 0 ? (
-            <div className="py-32 text-center neu-concave rounded-[4rem] space-y-10">
-              <div className="w-24 h-24 neu-convex rounded-[2rem] flex items-center justify-center mx-auto text-[var(--color-text)] opacity-10">
-                <MessageSquare size={40} strokeWidth={1} />
+            <div className="py-20 sm:py-32 text-center neu-concave rounded-[3rem] sm:rounded-[4rem] space-y-8 sm:space-y-10">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 neu-convex rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center mx-auto text-[var(--color-text)] opacity-10">
+                <MessageSquare size={32} className="sm:w-10 sm:h-10" strokeWidth={1} />
               </div>
-              <div className="space-y-3 px-8">
-                <h4 className="text-[var(--color-text)] opacity-40 text-2xl font-black tracking-tight uppercase">The Archives are Empty</h4>
-                <p className="text-[var(--color-text)] opacity-20 text-base font-medium italic leading-relaxed max-w-sm mx-auto">
-                  Initiate a dialogue from any colleague's profile to establish a connection.
+              <div className="space-y-3 px-6 sm:px-8">
+                <h4 className="text-[var(--color-text)] opacity-40 text-xl sm:text-2xl font-black tracking-tight uppercase">Empty Archive</h4>
+                <p className="text-[var(--color-text)] opacity-20 text-sm sm:text-base font-medium italic leading-relaxed max-w-sm mx-auto">
+                  Initiate a dialogue from any profile to establish a connection.
                 </p>
               </div>
             </div>
           ) : filteredConversations.length === 0 ? (
-            <div className="py-32 text-center neu-concave rounded-[4rem]">
-              <p className="text-[var(--color-text)] opacity-40 text-base font-medium italic">No correspondences identified matching "{searchQuery}"</p>
+            <div className="py-20 sm:py-32 text-center neu-concave rounded-[3rem] sm:rounded-[4rem]">
+              <p className="text-[var(--color-text)] opacity-40 text-sm sm:text-base font-medium italic px-6">No correspondences identified matching "{searchQuery}"</p>
             </div>
           ) : (
             filteredConversations.map((convo) => {
@@ -86,31 +86,31 @@ export default function ConversationsList({ onSelectConvo }: ConversationsListPr
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   onClick={() => onSelectConvo(convo.id)}
-                  className="w-full p-10 neu-convex rounded-[3rem] flex items-center gap-10 hover:scale-[1.02] active:scale-[0.98] transition-all group"
+                  className="w-full p-6 sm:p-10 neu-convex rounded-[2.5rem] sm:rounded-[3rem] flex items-center gap-6 sm:gap-10 hover:scale-[1.02] active:scale-[0.98] transition-all group"
                 >
-                  <div className="w-24 h-24 rounded-[1.5rem] neu-concave p-1 shrink-0">
-                    <div className="w-full h-full rounded-[1.25rem] flex items-center justify-center overflow-hidden">
+                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-[1.5rem] neu-concave p-0.5 sm:p-1 shrink-0">
+                    <div className="w-full h-full rounded-[1.15rem] sm:rounded-[1.25rem] flex items-center justify-center overflow-hidden">
                       {profile?.avatar ? (
                         <img src={profile.avatar} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                       ) : (
-                        <span className="text-4xl font-black text-[var(--color-text)] opacity-20">{(profile?.displayName || '?')[0].toUpperCase()}</span>
+                        <span className="text-3xl sm:text-4xl font-black text-[var(--color-text)] opacity-20">{(profile?.displayName || '?')[0].toUpperCase()}</span>
                       )}
                     </div>
                   </div>
                   <div className="flex-1 min-w-0 text-left">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-extrabold text-2xl text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors tracking-tight truncate pr-4">
-                        {profile?.displayName || 'Counterparty'}
+                    <div className="flex items-center justify-between mb-2 sm:mb-3">
+                      <h3 className="font-extrabold text-lg sm:text-2xl text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors tracking-tight truncate pr-2 sm:pr-4">
+                        {profile?.displayName || 'Correspondent'}
                       </h3>
-                      <span className="text-[10px] font-black text-[var(--color-text)] opacity-20 uppercase tracking-widest whitespace-nowrap">
+                      <span className="text-[8px] sm:text-[10px] font-black text-[var(--color-text)] opacity-20 uppercase tracking-widest whitespace-nowrap">
                         {convo.updatedAt?.seconds ? new Date(convo.updatedAt.seconds * 1000).toLocaleDateString() : ''}
                       </span>
                     </div>
-                    <p className="text-lg text-[var(--color-text)] opacity-40 truncate font-medium leading-relaxed">
+                    <p className="text-sm sm:text-lg text-[var(--color-text)] opacity-40 truncate font-medium leading-relaxed">
                       {convo.lastMessage || 'Channel established'}
                     </p>
                   </div>
-                  <ChevronRight size={28} className="text-[var(--color-text)] opacity-10 group-hover:text-[var(--color-accent)] group-hover:opacity-100 transition-all shrink-0" strokeWidth={3} />
+                  <ChevronRight size={20} className="sm:w-7 sm:h-7 text-[var(--color-text)] opacity-10 group-hover:text-[var(--color-accent)] group-hover:opacity-100 transition-all shrink-0" strokeWidth={3} />
                 </motion.button>
               );
             })

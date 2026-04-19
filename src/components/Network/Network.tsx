@@ -400,7 +400,7 @@ export default function Network() {
 
   return (
     <div 
-      className={`h-full bg-[var(--color-bg)] text-[var(--color-text)] flex flex-col p-6 sm:p-14 transition-all relative overflow-hidden no-scrollbar ${isDragging ? 'opacity-50' : ''}`}
+      className={`h-full bg-[var(--color-bg)] text-[var(--color-text)] flex flex-col p-4 sm:p-14 transition-all relative overflow-hidden no-scrollbar ${isDragging ? 'opacity-50' : ''}`}
       onDragOver={onDragOver}
       onDragEnter={onDragEnter}
       onDragLeave={onDragLeave}
@@ -415,44 +415,44 @@ export default function Network() {
             exit={{ opacity: 0 }}
             className="absolute inset-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur-xl border-4 border-dashed border-[var(--color-accent)] flex flex-col items-center justify-center pointer-events-none"
           >
-            <div className="w-24 h-24 rounded-[2rem] neu-convex flex items-center justify-center mb-6 shadow-2xl">
-              <Upload size={48} className="text-[var(--color-accent)] animate-bounce" />
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-[1.5rem] sm:rounded-[2rem] neu-convex flex items-center justify-center mb-6 shadow-2xl">
+              <Upload size={40} className="sm:w-12 sm:h-12 text-[var(--color-accent)] animate-bounce" />
             </div>
-            <h2 className="text-3xl font-black tracking-tight text-[var(--color-text)] uppercase">Relinquish Assets</h2>
-            <p className="text-[var(--color-text)] opacity-40 text-[10px] font-black uppercase tracking-[0.3em] mt-4">Protocol: Secure Batch Transmission</p>
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[var(--color-text)] uppercase px-6 text-center">Relinquish Assets</h2>
+            <p className="text-[var(--color-text)] opacity-40 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em] mt-4">Protocol: Secure Batch Transmission</p>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-8">
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 sm:mb-12 gap-6 sm:gap-8">
         <div className="text-center sm:text-left">
-          <h1 className="text-4xl font-black tracking-tight text-[var(--color-text)] uppercase">Vault</h1>
-          <p className="text-[var(--color-text)] opacity-40 text-lg font-medium tracking-tight mt-1">Strategic assets and collective intelligence.</p>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text)] uppercase">Vault</h1>
+          <p className="text-[var(--color-text)] opacity-40 text-base sm:text-lg font-medium tracking-tight mt-0.5 sm:mt-1 px-4 sm:px-0">Strategic assets and collective intelligence.</p>
         </div>
-        <div className="flex gap-5">
+        <div className="flex gap-4 sm:gap-5">
           <button 
             onClick={() => setShowFolderModal(true)}
-            className="p-5 neu-button rounded-2xl text-[var(--color-text)] opacity-60 hover:opacity-100 hover:text-[var(--color-accent)] transition-all"
-            title="Initialize Collection"
+            className="p-4 sm:p-5 neu-button rounded-xl sm:rounded-2xl text-[var(--color-text)] opacity-60 hover:opacity-100 hover:text-[var(--color-accent)] transition-all"
+            title="New Collection"
           >
-            <FolderPlus size={24} strokeWidth={2.5} />
+            <FolderPlus size={20} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
           </button>
           
           <div className="relative group">
-            <button className="h-16 px-10 neu-button-accent text-white rounded-2xl transition-all flex items-center gap-3 font-black text-[10px] uppercase tracking-[0.2em] shadow-lg">
-              <Plus size={20} strokeWidth={3} />
+            <button className="h-14 sm:h-16 px-6 sm:px-10 neu-button-accent text-white rounded-xl sm:rounded-2xl transition-all flex items-center gap-3 font-black text-[9px] sm:text-[10px] uppercase tracking-[0.2em] shadow-lg">
+              <Plus size={18} className="sm:w-5 sm:h-5" strokeWidth={3} />
               {isUploading ? 'Syncing...' : 'Provision'}
             </button>
             
-            <div className="absolute right-0 mt-5 w-64 neu-convex rounded-[2.5rem] shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden py-3">
-              <label className="flex items-center gap-4 px-8 py-5 text-[10px] font-black uppercase tracking-widest text-[var(--color-text)] opacity-60 hover:opacity-100 hover:neu-concave cursor-pointer transition-all">
-                <File size={18} className="text-[var(--color-accent)]" />
+            <div className="absolute right-0 mt-3 sm:mt-5 w-56 sm:w-64 neu-convex rounded-2xl sm:rounded-[2.5rem] shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden py-2 sm:py-3">
+              <label className="flex items-center gap-3 sm:gap-4 px-6 sm:px-8 py-4 sm:py-5 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-[var(--color-text)] opacity-60 hover:opacity-100 hover:neu-concave cursor-pointer transition-all">
+                <File size={16} className="sm:w-[18px] sm:h-[18px] text-[var(--color-accent)]" />
                 Atomic Assets
                 <input type="file" className="hidden" onChange={handleFileUpload} multiple disabled={isUploading} />
               </label>
-              <label className="flex items-center gap-4 px-8 py-5 text-[10px] font-black uppercase tracking-widest text-[var(--color-text)] opacity-60 hover:opacity-100 hover:neu-concave cursor-pointer transition-all border-t border-[var(--color-shadow-dark)]/5">
-                <Folder size={18} className="text-[var(--color-accent)]" />
+              <label className="flex items-center gap-3 sm:gap-4 px-6 sm:px-8 py-4 sm:py-5 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-[var(--color-text)] opacity-60 hover:opacity-100 hover:neu-concave cursor-pointer transition-all border-t border-[var(--color-shadow-dark)]/5">
+                <Folder size={16} className="sm:w-[18px] sm:h-[18px] text-[var(--color-accent)]" />
                 Linked Nodes
                 <input 
                   type="file" 
@@ -468,19 +468,19 @@ export default function Network() {
       </div>
 
       {/* Breadcrumbs */}
-      <div className="flex items-center gap-4 mb-10 text-[10px] font-black uppercase tracking-[0.2em] flex-wrap">
+      <div className="flex items-center gap-2 sm:gap-4 mb-8 sm:mb-10 text-[8px] sm:text-[10px] font-black uppercase tracking-[0.2em] flex-wrap justify-center sm:justify-start">
         <button 
           onClick={() => setCurrentFolderId(null)}
-          className={`px-4 py-2 rounded-xl transition-all ${!currentFolderId ? 'neu-concave text-[var(--color-accent)]' : 'text-[var(--color-text)] opacity-20 hover:opacity-60'}`}
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl transition-all ${!currentFolderId ? 'neu-concave text-[var(--color-accent)]' : 'text-[var(--color-text)] opacity-20 hover:opacity-60'}`}
         >
-          Inner Circle Root
+          Root
         </button>
         {breadcrumbs.map((folder) => (
           <React.Fragment key={folder.id}>
-            <ChevronRight size={14} className="text-[var(--color-text)] opacity-10" strokeWidth={3} />
+            <ChevronRight size={12} className="text-[var(--color-text)] opacity-10" strokeWidth={3} />
             <button 
               onClick={() => setCurrentFolderId(folder.id)}
-              className={`px-4 py-2 rounded-xl transition-all ${currentFolderId === folder.id ? 'neu-concave text-[var(--color-accent)]' : 'text-[var(--color-text)] opacity-20 hover:opacity-60'}`}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl transition-all ${currentFolderId === folder.id ? 'neu-concave text-[var(--color-accent)]' : 'text-[var(--color-text)] opacity-20 hover:opacity-60'}`}
             >
               {folder.name}
             </button>
@@ -489,24 +489,24 @@ export default function Network() {
       </div>
 
       {/* Search & Filters */}
-      <div className="flex flex-col lg:flex-row gap-6 mb-12">
-        <div className="flex-1 relative neu-concave rounded-3xl p-1 flex items-center">
-          <Search className="ml-6 text-[var(--color-text)] opacity-20" size={20} strokeWidth={2.5} />
+      <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 mb-8 sm:mb-12">
+        <div className="flex-1 relative neu-concave rounded-2xl sm:rounded-3xl p-1 flex items-center">
+          <Search className="ml-4 sm:ml-6 text-[var(--color-text)] opacity-20 sm:w-5 sm:h-5" size={18} strokeWidth={2.5} />
           <input 
             type="text" 
-            placeholder="Query Vault Identity..." 
+            placeholder="Search Vault..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-transparent border-none py-5 px-6 text-base text-[var(--color-text)] outline-none placeholder-[var(--color-text)] placeholder:opacity-20 font-medium"
+            className="w-full bg-transparent border-none py-4 sm:py-5 px-4 sm:px-6 text-sm sm:text-base text-[var(--color-text)] outline-none placeholder-[var(--color-text)] placeholder:opacity-20 font-medium"
           />
         </div>
         
-        <div className="flex gap-4">
-          <div className="flex neu-concave rounded-[1.5rem] p-1 overflow-hidden">
+        <div className="flex gap-3 sm:gap-4 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
+          <div className="flex neu-concave rounded-xl sm:rounded-[1.5rem] p-0.5 sm:p-1 overflow-hidden shrink-0">
             <select 
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortField)}
-              className="bg-transparent text-[10px] font-black uppercase tracking-widest text-[var(--color-text)] opacity-40 px-6 py-2 outline-none cursor-pointer hover:opacity-100 transition-all"
+              className="bg-transparent text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-[var(--color-text)] opacity-40 px-4 sm:px-6 py-2 outline-none cursor-pointer hover:opacity-100 transition-all"
             >
               <option value="name">Alpha</option>
               <option value="date">Temporal</option>
@@ -514,14 +514,14 @@ export default function Network() {
             </select>
             <button 
               onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
-              className="px-6 text-[var(--color-text)] opacity-20 hover:opacity-100 transition-all flex items-center justify-center bg-transparent border-l border-[var(--color-shadow-dark)]/10"
+              className="px-4 sm:px-6 text-[var(--color-text)] opacity-20 hover:opacity-100 transition-all flex items-center justify-center bg-transparent border-l border-[var(--color-shadow-dark)]/10"
             >
-              {sortOrder === 'asc' ? <ArrowUp size={16} strokeWidth={3} /> : <ArrowDown size={16} strokeWidth={3} />}
+              {sortOrder === 'asc' ? <ArrowUp size={14} className="sm:w-4 sm:h-4" strokeWidth={3} /> : <ArrowDown size={14} className="sm:w-4 sm:h-4" strokeWidth={3} />}
             </button>
           </div>
 
-          <button className="px-8 neu-button rounded-[1.5rem] text-[var(--color-text)] opacity-40 hover:opacity-100 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest">
-            <Filter size={18} strokeWidth={2.5} />
+          <button className="px-6 sm:px-8 py-3 sm:py-0 neu-button rounded-xl sm:rounded-[1.5rem] text-[var(--color-text)] opacity-40 hover:opacity-100 transition-all flex items-center gap-2 sm:gap-3 text-[8px] sm:text-[10px] font-black uppercase tracking-widest shrink-0">
+            <Filter size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={2.5} />
             Refine
           </button>
         </div>
@@ -529,18 +529,18 @@ export default function Network() {
 
       {/* Upload Progress */}
       {Object.keys(uploadProgress).length > 0 && (
-        <div className="mb-12 space-y-4">
+        <div className="mb-8 sm:mb-12 space-y-3 sm:space-y-4">
           {Object.entries(uploadProgress).map(([name, progress]) => (
-            <div key={name} className="neu-convex rounded-3xl p-6 flex items-center gap-6 shadow-sm">
-              <div className="w-12 h-12 rounded-2xl neu-concave flex items-center justify-center text-[var(--color-accent)]">
-                <Loader2 size={24} className="animate-spin" strokeWidth={3} />
+            <div key={name} className="neu-convex rounded-2xl sm:rounded-3xl p-4 sm:p-6 flex items-center gap-4 sm:gap-6 shadow-sm">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl neu-concave flex items-center justify-center text-[var(--color-accent)]">
+                <Loader2 size={20} className="sm:w-6 sm:h-6 animate-spin" strokeWidth={3} />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex justify-between mb-3">
-                  <span className="text-sm font-black text-[var(--color-text)] truncate max-w-[300px] uppercase tracking-wider">{name}</span>
-                  <span className="text-[10px] font-black text-[var(--color-accent)] italic tracking-widest">{Math.round(progress)}% COMPLETED</span>
+                <div className="flex justify-between mb-2 sm:mb-3">
+                  <span className="text-xs sm:text-sm font-black text-[var(--color-text)] truncate max-w-[200px] sm:max-w-[300px] uppercase tracking-wider">{name}</span>
+                  <span className="text-[8px] sm:text-[10px] font-black text-[var(--color-accent)] italic tracking-widest">{Math.round(progress)}%</span>
                 </div>
-                <div className="h-2 neu-concave rounded-full overflow-hidden">
+                <div className="h-1.5 sm:h-2 neu-concave rounded-full overflow-hidden">
                   <motion.div 
                     className="h-full bg-[var(--color-accent)] shadow-[0_0_10px_var(--color-accent)]"
                     initial={{ width: 0 }}
@@ -555,7 +555,7 @@ export default function Network() {
 
       {/* Grid View */}
       <div className="flex-1 overflow-y-auto no-scrollbar pb-32">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 sm:gap-8">
           {/* Folders */}
           {currentFolders.map((folder) => (
             <motion.div 
@@ -564,29 +564,30 @@ export default function Network() {
               animate={{ opacity: 1, scale: 1 }}
               key={folder.id}
               onDoubleClick={() => setCurrentFolderId(folder.id)}
-              className="group p-8 neu-convex rounded-[3rem] hover:scale-[1.02] transition-all cursor-pointer relative"
+              onClick={() => { if (window.innerWidth < 768) setCurrentFolderId(folder.id) }}
+              className="group p-6 sm:p-8 neu-convex rounded-[2.5rem] sm:rounded-[3rem] hover:scale-[1.02] transition-all cursor-pointer relative"
             >
-              <div className="flex items-center justify-between mb-8">
-                <div className="w-16 h-16 rounded-[1.5rem] neu-concave flex items-center justify-center text-[var(--color-accent)]">
-                  <Folder size={36} fill="currentColor" fillOpacity={0.15} strokeWidth={2} />
+              <div className="flex items-center justify-between mb-6 sm:mb-8">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-[1.5rem] neu-concave flex items-center justify-center text-[var(--color-accent)]">
+                  <Folder size={24} className="sm:w-9 sm:h-9" fill="currentColor" fillOpacity={0.15} strokeWidth={2} />
                 </div>
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
+                <div className="flex gap-2 sm:opacity-0 sm:group-hover:opacity-100 transition-all sm:translate-x-2 sm:group-hover:translate-x-0">
                   <button 
                     onClick={(e) => { e.stopPropagation(); archiveItem(folder.id, true); }}
-                    className="p-3 rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#FF9500] transition-all"
+                    className="p-2.5 sm:p-3 rounded-lg sm:rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#FF9500] transition-all"
                   >
-                    <Archive size={18} strokeWidth={2.5} />
+                    <Archive size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={2.5} />
                   </button>
                   <button 
                     onClick={(e) => { e.stopPropagation(); deleteItem(folder.id, true); }}
-                    className="p-3 rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#FF3B30] transition-all"
+                    className="p-2.5 sm:p-3 rounded-lg sm:rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#FF3B30] transition-all"
                   >
-                    <Trash2 size={18} strokeWidth={2.5} />
+                    <Trash2 size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={2.5} />
                   </button>
                 </div>
               </div>
-              <h3 className="font-extrabold text-lg text-[var(--color-text)] truncate mb-2">{folder.name}</h3>
-              <p className="text-[10px] font-black text-[var(--color-text)] opacity-20 uppercase tracking-[0.3em]">Module Collection</p>
+              <h3 className="font-extrabold text-base sm:text-lg text-[var(--color-text)] truncate mb-1.5 sm:mb-2">{folder.name}</h3>
+              <p className="text-[9px] sm:text-[10px] font-black text-[var(--color-text)] opacity-20 uppercase tracking-[0.3em]">Module Collection</p>
             </motion.div>
           ))}
 
@@ -597,54 +598,54 @@ export default function Network() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               key={file.id}
-              className="group p-8 neu-convex rounded-[3rem] hover:scale-[1.02] transition-all relative"
+              className="group p-6 sm:p-8 neu-convex rounded-[2.5rem] sm:rounded-[3rem] hover:scale-[1.02] transition-all relative"
             >
-              <div className="flex items-center justify-between mb-8">
-                <div className="w-16 h-16 rounded-[1.5rem] neu-concave flex items-center justify-center text-[var(--color-text)] opacity-20">
+              <div className="flex items-center justify-between mb-6 sm:mb-8">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-[1.5rem] neu-concave flex items-center justify-center text-[var(--color-text)] opacity-20">
                   {getFileIcon(file.type)}
                 </div>
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
+                <div className="flex gap-2 sm:opacity-0 sm:group-hover:opacity-100 transition-all sm:translate-x-2 sm:group-hover:translate-x-0">
                   <a 
                     href={file.url || file.content} 
                     target="_blank"
                     rel="noopener noreferrer"
                     download={file.name}
-                    className="p-3 rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#34C759] transition-all"
+                    className="p-2.5 sm:p-3 rounded-lg sm:rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#34C759] transition-all"
                   >
-                    <Download size={18} strokeWidth={2.5} />
+                    <Download size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={2.5} />
                   </a>
                   <button 
                     onClick={() => archiveItem(file.id, false)}
-                    className="p-3 rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#FF9500] transition-all"
+                    className="p-2.5 sm:p-3 rounded-lg sm:rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#FF9500] transition-all"
                   >
-                    <Archive size={18} strokeWidth={2.5} />
+                    <Archive size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={2.5} />
                   </button>
                   <button 
                     onClick={() => deleteItem(file.id, false)}
-                    className="p-3 rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#FF3B30] transition-all"
+                    className="p-2.5 sm:p-3 rounded-lg sm:rounded-xl neu-button text-[var(--color-text)] opacity-40 hover:opacity-100 hover:text-[#FF3B30] transition-all"
                   >
-                    <Trash2 size={18} strokeWidth={2.5} />
+                    <Trash2 size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={2.5} />
                   </button>
                 </div>
               </div>
-              <h3 className="font-extrabold text-lg text-[var(--color-text)] truncate mb-2">{file.name}</h3>
+              <h3 className="font-extrabold text-base sm:text-lg text-[var(--color-text)] truncate mb-1.5 sm:mb-2">{file.name}</h3>
               <div className="flex items-center justify-between">
-                <p className="text-[9px] font-black text-[var(--color-text)] opacity-20 uppercase tracking-[0.2em]">{(file.size / 1024).toFixed(1)} KB</p>
-                <div className="neu-concave px-3 py-1 rounded-full">
-                  <span className="text-[8px] font-black text-[var(--color-accent)] uppercase tracking-widest">{file.type}</span>
+                <p className="text-[8px] sm:text-[9px] font-black text-[var(--color-text)] opacity-20 uppercase tracking-[0.2em]">{(file.size / 1024).toFixed(1)} KB</p>
+                <div className="neu-concave px-2 sm:px-3 py-1 rounded-full">
+                  <span className="text-[7px] sm:text-[8px] font-black text-[var(--color-accent)] uppercase tracking-widest">{file.type}</span>
                 </div>
               </div>
             </motion.div>
           ))}
 
           {currentFiles.length === 0 && currentFolders.length === 0 && (
-            <div className="col-span-full py-48 text-center neu-concave rounded-[4rem] space-y-10">
-              <div className="w-24 h-24 neu-convex rounded-full flex items-center justify-center mx-auto text-[var(--color-text)] opacity-10">
-                <Folder size={40} strokeWidth={1} />
+            <div className="col-span-full py-24 sm:py-48 text-center neu-concave rounded-[3rem] sm:rounded-[4rem] space-y-8 sm:space-y-10 px-6">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 neu-convex rounded-full flex items-center justify-center mx-auto text-[var(--color-text)] opacity-10">
+                <Folder size={32} className="sm:w-10 sm:h-10" strokeWidth={1} />
               </div>
-              <div className="space-y-3">
-                <h4 className="text-[var(--color-text)] opacity-40 text-2xl font-black tracking-tight uppercase">Void Directory</h4>
-                <p className="text-[var(--color-text)] opacity-20 text-base font-medium italic">Provision assets to establish this collection.</p>
+              <div className="space-y-2 sm:space-y-3">
+                <h4 className="text-[var(--color-text)] opacity-40 text-xl sm:text-2xl font-black tracking-tight uppercase px-4 text-center">Void Directory</h4>
+                <p className="text-[var(--color-text)] opacity-20 text-sm sm:text-base font-medium italic">Provision assets to establish this collection.</p>
               </div>
             </div>
           )}
@@ -659,33 +660,33 @@ export default function Network() {
               initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 30 }}
-              className="w-full max-w-md neu-convex rounded-[3.5rem] p-12 shadow-2xl space-y-10"
+              className="w-full max-w-md neu-convex rounded-[2.5rem] sm:rounded-[3.5rem] p-8 sm:p-12 shadow-2xl space-y-8 sm:space-y-10"
             >
               <div className="space-y-2">
-                <h2 className="text-3xl font-black tracking-tight text-[var(--color-text)] uppercase leading-none">Initialize</h2>
+                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[var(--color-text)] uppercase leading-none">Initialize</h2>
                 <p className="text-[var(--color-text)] opacity-40 text-sm font-medium">Define a new collection parameters.</p>
               </div>
-              <div className="space-y-10">
-                <div className="neu-concave rounded-3xl p-2">
+              <div className="space-y-8 sm:space-y-10">
+                <div className="neu-concave rounded-2xl sm:rounded-3xl p-1 sm:p-2">
                   <input 
                     type="text" 
                     placeholder="Collection Label"
                     value={newFolderName}
                     onChange={(e) => setNewFolderName(e.target.value)}
                     autoFocus
-                    className="w-full bg-transparent border-none rounded-2xl py-5 px-6 text-base text-[var(--color-text)] outline-none placeholder-[var(--color-text)] placeholder:opacity-20 font-bold"
+                    className="w-full bg-transparent border-none rounded-xl sm:rounded-2xl py-4 sm:py-5 px-5 sm:px-6 text-sm sm:text-base text-[var(--color-text)] outline-none placeholder-[var(--color-text)] placeholder:opacity-20 font-bold"
                   />
                 </div>
                 <div className="flex gap-4">
                   <button 
                     onClick={() => setShowFolderModal(false)}
-                    className="flex-1 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text)] opacity-40 hover:opacity-100 transition-all hover:neu-button"
+                    className="flex-1 py-4 sm:py-5 rounded-xl sm:rounded-2xl text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text)] opacity-40 hover:opacity-100 transition-all hover:neu-button"
                   >
                     Abort
                   </button>
                   <button 
                     onClick={createFolder}
-                    className="flex-1 py-5 neu-button-accent text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg active:scale-95 transition-all"
+                    className="flex-1 py-4 sm:py-5 neu-button-accent text-white rounded-xl sm:rounded-2xl text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg active:scale-95 transition-all"
                   >
                     Confirm
                   </button>
@@ -704,36 +705,36 @@ export default function Network() {
               initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 30 }}
-              className="w-full max-w-md neu-convex rounded-[4rem] p-14 text-center space-y-10"
+              className="w-full max-w-md neu-convex rounded-[3rem] sm:rounded-[4rem] p-10 sm:p-14 text-center space-y-8 sm:space-y-10"
             >
-              <div className={`w-24 h-24 rounded-3xl flex items-center justify-center mx-auto shadow-inner neu-concave ${
+              <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto shadow-inner neu-concave ${
                 confirmAction.type === 'delete' ? 'text-[#FF3B30]' : 'text-[#FF9500]'
               }`}>
-                {confirmAction.type === 'delete' ? <Trash2 size={44} strokeWidth={2.5} /> : <Archive size={44} strokeWidth={2.5} />}
+                {confirmAction.type === 'delete' ? <Trash2 size={36} className="sm:w-[44px] sm:h-[44px]" strokeWidth={2.5} /> : <Archive size={36} className="sm:w-[44px] sm:h-[44px]" strokeWidth={2.5} />}
               </div>
-              <div className="space-y-3">
-                <h2 className="text-3xl font-black tracking-tight text-[var(--color-text)] uppercase leading-none">
-                  {confirmAction.type === 'delete' ? 'Eliminate' : 'Relocate'}
+              <div className="space-y-2 sm:space-y-3">
+                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[var(--color-text)] uppercase leading-none">
+                  {confirmAction.type === 'delete' ? 'Delete' : 'Archive'}
                 </h2>
-                <p className="text-[var(--color-text)] opacity-40 text-base font-medium italic">
+                <p className="text-[var(--color-text)] opacity-40 text-sm sm:text-base font-medium italic">
                   Confirmed {confirmAction.isFolder ? 'Collection' : 'Asset'} targeting.
                 </p>
               </div>
-              <p className="text-[var(--color-text)] opacity-60 text-sm leading-relaxed px-4">
+              <p className="text-[var(--color-text)] opacity-60 text-xs sm:text-sm leading-relaxed px-2 sm:px-4">
                 {confirmAction.type === 'delete' 
                   ? 'Strategic purge initiated. Digital presence will be permanently dissolved.' 
                   : 'Asset relocation proposed. Transferring to cold storage archives.'}
               </p>
-              <div className="flex gap-5 pt-4">
+              <div className="flex gap-4 sm:gap-5 pt-2 sm:pt-4">
                 <button 
                   onClick={() => setConfirmAction(null)}
-                  className="flex-1 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text)] opacity-40 hover:opacity-100 transition-all"
+                  className="flex-1 py-4 sm:py-5 rounded-xl sm:rounded-2xl text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text)] opacity-40 hover:opacity-100 transition-all"
                 >
                   Recall
                 </button>
                 <button 
                   onClick={executeConfirmAction}
-                  className={`flex-1 py-5 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg transition-all active:scale-95 ${
+                  className={`flex-1 py-4 sm:py-5 text-white rounded-xl sm:rounded-2xl text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg transition-all active:scale-95 ${
                     confirmAction.type === 'delete' ? 'bg-[#FF3B30] hover:bg-[#FF453A] shadow-[#FF3B3030]' : 'bg-[#FF9500] hover:bg-[#FFAC33] shadow-[#FF950030]'
                   }`}
                 >
