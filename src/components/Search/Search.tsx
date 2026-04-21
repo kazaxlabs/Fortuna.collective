@@ -184,7 +184,7 @@ export default function Search({ onSelectUser, onMessageUser }: SearchProps) {
                       <h3 className="font-extrabold text-xl sm:text-2xl tracking-tight text-[var(--color-text)]">{user.displayName}</h3>
                       <div className="neu-concave px-2.5 sm:px-3 py-1 rounded-full scale-90">
                         <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[var(--color-accent)]">
-                          {user.role === 'admin' ? 'Strategic Architect' : 'Core Node'}
+                          {user.role === 'admin' ? 'Admin' : 'Member'}
                         </span>
                       </div>
                     </div>

@@ -6,7 +6,7 @@ import { useAuth } from '../../context/useAuth';
 const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
 
 export default function Login() {
-  const { login, loginWithEmail } = useAuth();
+  const { loginWithEmail } = useAuth();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,19 +17,6 @@ export default function Login() {
   useEffect(() => {
     setIsMobileDevice(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
   }, []);
-
-  const handleGoogleLogin = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      await login();
-    } catch (err) {
-      console.error(err);
-      setError('Google authentication failed.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleCredentialLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,26 +95,6 @@ export default function Login() {
             </span>
           </button>
         </form>
-
-        <div className="w-full flex items-center gap-6 mb-10">
-          <div className="flex-1 h-[2px] neu-concave rounded-full opacity-30"></div>
-          <span className="text-[10px] font-bold text-[var(--color-text)] opacity-40 uppercase tracking-[0.3em]">Alternative Sign In</span>
-          <div className="flex-1 h-[2px] neu-concave rounded-full opacity-30"></div>
-        </div>
-
-        <button
-          onClick={handleGoogleLogin}
-          disabled={loading}
-          className="w-full flex items-center justify-center gap-4 neu-button text-[var(--color-text)] font-bold py-4 px-8 rounded-2xl disabled:opacity-50"
-        >
-          <img 
-            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
-            alt="" 
-            className="w-5 h-5"
-            referrerPolicy="no-referrer"
-          />
-          <span className="text-sm uppercase tracking-widest">Continue with Google</span>
-        </button>
 
         <footer className="mt-24 text-center">
           <p className="text-[10px] text-[var(--color-text)] opacity-40 font-bold uppercase tracking-widest leading-relaxed max-w-xs">

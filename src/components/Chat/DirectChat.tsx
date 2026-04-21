@@ -23,7 +23,7 @@ export default function DirectChat({ convoId, onBack }: DirectChatProps) {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 1024 * 1024) {
-        alert('Transmission too substantial. Please upload an asset smaller than 1MB.');
+        alert('File too large. Please upload a file smaller than 1MB.');
         return;
       }
       const reader = new FileReader();
@@ -69,7 +69,7 @@ export default function DirectChat({ convoId, onBack }: DirectChatProps) {
 
   const handleSend = async () => {
     if ((!newMessage.trim() && !attachment) || !user) return;
-    const messageText = attachment ? `${newMessage}\n\n[Asset Transmitted]` : newMessage;
+    const messageText = attachment ? `${newMessage}\n\n[File Sent]` : newMessage;
     await sendDirectMessage(convoId, user.uid, receiverId, messageText);
     setNewMessage('');
     setAttachment(null);
@@ -98,7 +98,7 @@ export default function DirectChat({ convoId, onBack }: DirectChatProps) {
               <h2 className="text-2xl font-black tracking-tight text-[var(--color-text)]">{receiverProfile?.displayName || 'Terminal Contact'}</h2>
               <div className="flex items-center gap-2 mt-1">
                 <div className="w-2 h-2 bg-[#34C759] rounded-full shadow-[0_0_10px_#34C759]" />
-                <p className="text-[10px] text-[var(--color-text)] opacity-40 font-black uppercase tracking-[0.2em]">Synchronous Link Active</p>
+                <p className="text-[10px] text-[var(--color-text)] opacity-40 font-black uppercase tracking-[0.2em]">Private Chat Active</p>
               </div>
             </div>
           </div>
@@ -135,7 +135,7 @@ export default function DirectChat({ convoId, onBack }: DirectChatProps) {
                           </>
                         ) : (
                           <>
-                            <span>Transmitted</span>
+                            <span>Sent</span>
                             <Check size={12} strokeWidth={3} />
                           </>
                         )}

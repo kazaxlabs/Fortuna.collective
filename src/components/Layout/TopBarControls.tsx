@@ -22,7 +22,7 @@ export default function TopBarControls() {
           {/* Logo/Brand for mobile */}
           <div className="md:hidden flex items-center gap-3 px-6">
             <ShieldCheck size={20} className="text-[var(--color-accent)]" />
-            <span className="text-label font-black tracking-[0.4em] uppercase text-[var(--color-text-muted)]">Neural Network</span>
+            <span className="text-label font-black tracking-[0.4em] uppercase text-[var(--color-text-muted)]">Active</span>
           </div>
 
           <div className="flex items-center gap-3">

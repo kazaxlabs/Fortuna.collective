@@ -91,7 +91,7 @@ export default function FounderControl() {
             </div>
             Foundry Control
           </h1>
-          <p className="text-[10px] text-[var(--color-text)] opacity-40 mt-3 font-black uppercase tracking-[0.3em]">Institutional Governance & Neural Oversight</p>
+          <p className="text-[10px] text-[var(--color-text)] opacity-40 mt-3 font-black uppercase tracking-[0.3em]">System Administration & Oversight</p>
         </div>
         
         <div className="flex items-center gap-6">
@@ -183,7 +183,7 @@ export default function FounderControl() {
                         </p>
                         <div className="p-6 neu-concave rounded-[2rem] border border-[var(--color-shadow-dark)]/5">
                           <p className="text-[9px] text-[var(--color-text)] opacity-20 font-black uppercase tracking-[0.3em] mb-4">Tactical Reasoning</p>
-                          <p className="text-lg italic font-medium opacity-80 leading-relaxed text-[var(--color-text)]">"{proposal.data?.explanation || proposal.data?.reasoning || 'No metadata transmitted.'}"</p>
+                          <p className="text-lg italic font-medium opacity-80 leading-relaxed text-[var(--color-text)]">"{proposal.data?.explanation || proposal.data?.reasoning || 'No details provided.'}"</p>
                         </div>
                         <div className="text-[10px] text-[var(--color-text)] opacity-20 font-black uppercase tracking-widest">
                           Signal Logged: {proposal.createdAt.toDate().toLocaleString()}
@@ -332,7 +332,7 @@ export default function FounderControl() {
                 <div className="p-5 neu-concave rounded-3xl text-[var(--color-text)] opacity-20 group-hover:opacity-100 group-hover:text-[var(--color-accent)] transition-all">
                   <UsersIcon size={40} strokeWidth={3} />
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--color-text)] opacity-30">Neural Nodes</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--color-text)] opacity-30">Network Members</span>
               </div>
               <div className="space-y-2">
                 <div className="text-7xl font-black tracking-tighter text-[var(--color-text)]">{stats.totalUsers}</div>
@@ -375,11 +375,11 @@ export default function FounderControl() {
                 <div className="p-5 neu-concave rounded-3xl text-[var(--color-text)] opacity-20 group-hover:opacity-100 group-hover:text-[var(--color-accent)] transition-all">
                   <BarChart3 size={40} strokeWidth={3} />
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--color-text)] opacity-30">Neural Bridges</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--color-text)] opacity-30">Active Connections</span>
               </div>
               <div className="space-y-2">
                 <div className="text-7xl font-black tracking-tighter text-[var(--color-text)]">{stats.totalConversations}</div>
-                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text)] opacity-30">Synchronous Private Channels</div>
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text)] opacity-30">Private Chat Channels</div>
               </div>
             </div>
           </div>

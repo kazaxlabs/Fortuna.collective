@@ -61,7 +61,7 @@ export default function UserNetwork({ onSelectUser, onMessageUser }: UserNetwork
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
           <div className="space-y-4">
             <h1 className="text-5xl font-black tracking-tighter text-[var(--color-text)] uppercase">Collective</h1>
-            <p className="text-[var(--color-text)] opacity-40 text-sm font-black uppercase tracking-[0.3em]">Strategic Partners in the Neural Network</p>
+            <p className="text-[var(--color-text)] opacity-40 text-sm font-black uppercase tracking-[0.3em]">Connections in your Network</p>
           </div>
           
           <div className="flex items-center gap-6 w-full md:w-auto">

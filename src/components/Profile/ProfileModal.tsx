@@ -173,7 +173,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 disabled={saving}
                 className="btn-primary !px-8 !py-3 !text-[10px] !tracking-[0.2em] disabled:opacity-30"
               >
-                {saving ? 'Transmitting...' : 'Save Profile'}
+                {saving ? 'Saving...' : 'Save Profile'}
               </button>
             </div>
           </div>

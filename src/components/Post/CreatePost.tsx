@@ -36,7 +36,7 @@ export default function CreatePost() {
       await createPost(user, content, 'general', attachments);
       setContent('');
       setAttachments([]);
-      alert('Transmission successful.');
+      alert('Posted successfully.');
     } catch (error) {
       console.error('Post creation error:', error);
     } finally {
@@ -139,7 +139,7 @@ export default function CreatePost() {
                 disabled={!content.trim() || isPosting}
                 className="flex items-center gap-4 neu-button-accent text-white px-12 py-5 rounded-[2.5rem] text-[10px] font-black uppercase tracking-[0.2em] shadow-lg disabled:opacity-50 active:scale-95 transition-all"
               >
-                {isPosting ? 'Transmitting...' : (
+                {isPosting ? 'Posting...' : (
                   <>
                     <span>Dispatch</span>
                     <Send size={18} strokeWidth={3} />

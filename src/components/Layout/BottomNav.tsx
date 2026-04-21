@@ -9,7 +9,7 @@ interface BottomNavProps {
 const NAV_ITEMS = [
   { id: 'feed', icon: Home, label: 'Home' },
   { id: 'search', icon: Search, label: 'Search' },
-  { id: 'create', icon: Plus, label: 'Brief' },
+  { id: 'create', icon: Plus, label: 'Post' },
   { id: 'network', icon: Network, label: 'Network' },
   { id: 'notifications', icon: Bell, label: 'Notifications' },
 ];

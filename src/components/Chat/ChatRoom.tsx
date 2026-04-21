@@ -121,7 +121,7 @@ export default function ChatRoom({ roomId }: ChatRoomProps) {
         </div>
         <div className="flex items-center gap-4">
           <div className="px-6 py-2 neu-concave rounded-full border border-[#34C75940]">
-            <span className="text-[9px] text-[#34C759] font-black uppercase tracking-[0.3em]">Neural Protocol Synchronized</span>
+            <span className="text-[9px] text-[#34C759] font-black uppercase tracking-[0.3em]">Secure Chat Connected</span>
           </div>
         </div>
       </div>

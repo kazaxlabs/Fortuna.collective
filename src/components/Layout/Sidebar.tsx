@@ -21,7 +21,7 @@ const NAV_ITEMS = [
   { id: 'network', icon: Network, label: 'Network' },
   { id: 'files', icon: Building, label: 'Library' },
   { id: 'messages', icon: MessageSquare, label: 'Messages' },
-  { id: 'create', icon: Plus, label: 'Compose Brief' },
+  { id: 'create', icon: Plus, label: 'Create Post' },
   { id: 'notifications', icon: Bell, label: 'Notifications' },
   { id: 'profile', icon: User, label: 'Profile' },
 ];
@@ -97,7 +97,7 @@ export default function Sidebar({ activeRoute, onRouteChange }: SidebarProps) {
                 className="flex flex-col min-w-0"
               >
                 <span className="text-sm font-bold truncate text-[var(--color-text)] tracking-tight">{profile?.displayName || 'Account'}</span>
-                <span className="text-[10px] text-[var(--color-accent)] font-bold truncate uppercase tracking-widest">{profile?.role === 'admin' ? 'Strategic Architect' : 'Core Node'}</span>
+                <span className="text-[10px] text-[var(--color-accent)] font-bold truncate uppercase tracking-widest">{profile?.role === 'admin' ? 'Admin' : 'Member'}</span>
               </motion.div>
             )}
           </AnimatePresence>

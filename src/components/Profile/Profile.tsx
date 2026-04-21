@@ -227,7 +227,7 @@ export default function Profile({ userId, onNavigateToChat }: ProfileProps) {
                 }`}
               >
                 {following ? <UserMinus size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={3} /> : <UserPlus size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={3} />}
-                {following ? 'Drop Sync' : 'Initiate Sync'}
+                {following ? 'Unfollow' : 'Follow'}
               </button>
             </div>
           )}
@@ -242,7 +242,7 @@ export default function Profile({ userId, onNavigateToChat }: ProfileProps) {
               <h1 className="text-3xl sm:text-display text-[var(--color-text)] uppercase tracking-tight">{currentProfile?.displayName}</h1>
               <div className="neu-concave px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-[var(--color-shadow-dark)]/5">
                 <span className="text-[10px] sm:text-label font-black uppercase tracking-[0.3em] text-[var(--color-accent)]">
-                  {currentProfile?.role === 'admin' ? 'Strategic Architect' : 'Core Node'}
+                  {currentProfile?.role === 'admin' ? 'Admin' : 'Member'}
                 </span>
               </div>
             </div>
@@ -379,7 +379,7 @@ export default function Profile({ userId, onNavigateToChat }: ProfileProps) {
                       </div>
                       <div className="flex flex-col items-end gap-1 text-[8px] sm:text-label font-black uppercase tracking-[0.2em] text-[var(--color-text-muted)] opacity-40">
                         <span>{new Date(post.createdAt?.seconds * 1000 || Date.now()).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                        <span>Transmitted</span>
+                        <span>Posted</span>
                       </div>
                     </div>
                   </div>
@@ -399,7 +399,7 @@ export default function Profile({ userId, onNavigateToChat }: ProfileProps) {
                   <div className="h-2 w-full" />
                 ) : posts.length > 0 && (
                   <div className="text-label font-black uppercase tracking-[0.4em] text-[var(--color-text-muted)] opacity-20">
-                    End of Transmissions
+                    End of Posts
                   </div>
                 )}
               </div>

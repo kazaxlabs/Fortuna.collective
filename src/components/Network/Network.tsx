@@ -419,7 +419,7 @@ export default function Network() {
               <Upload size={40} className="sm:w-12 sm:h-12 text-[var(--color-accent)] animate-bounce" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[var(--color-text)] uppercase px-6 text-center">Relinquish Assets</h2>
-            <p className="text-[var(--color-text)] opacity-40 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em] mt-4">Protocol: Secure Batch Transmission</p>
+            <p className="text-[var(--color-text)] opacity-40 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em] mt-4">Protocol: Secure File Upload</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -427,7 +427,7 @@ export default function Network() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-center justify-between mb-8 sm:mb-12 gap-6 sm:gap-8">
         <div className="text-center sm:text-left">
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text)] uppercase">Vault</h1>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text)] uppercase">Resources</h1>
           <p className="text-[var(--color-text)] opacity-40 text-base sm:text-lg font-medium tracking-tight mt-0.5 sm:mt-1 px-4 sm:px-0">Strategic assets and collective intelligence.</p>
         </div>
         <div className="flex gap-4 sm:gap-5">
@@ -442,7 +442,7 @@ export default function Network() {
           <div className="relative group">
             <button className="h-14 sm:h-16 px-6 sm:px-10 neu-button-accent text-white rounded-xl sm:rounded-2xl transition-all flex items-center gap-3 font-black text-[9px] sm:text-[10px] uppercase tracking-[0.2em] shadow-lg">
               <Plus size={18} className="sm:w-5 sm:h-5" strokeWidth={3} />
-              {isUploading ? 'Syncing...' : 'Provision'}
+              {isUploading ? 'Uploading...' : 'Upload'}
             </button>
             
             <div className="absolute right-0 mt-3 sm:mt-5 w-56 sm:w-64 neu-convex rounded-2xl sm:rounded-[2.5rem] shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden py-2 sm:py-3">
@@ -494,7 +494,7 @@ export default function Network() {
           <Search className="ml-4 sm:ml-6 text-[var(--color-text)] opacity-20 sm:w-5 sm:h-5" size={18} strokeWidth={2.5} />
           <input 
             type="text" 
-            placeholder="Search Vault..." 
+            placeholder="Search Resources..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-transparent border-none py-4 sm:py-5 px-4 sm:px-6 text-sm sm:text-base text-[var(--color-text)] outline-none placeholder-[var(--color-text)] placeholder:opacity-20 font-medium"
@@ -645,7 +645,7 @@ export default function Network() {
               </div>
               <div className="space-y-2 sm:space-y-3">
                 <h4 className="text-[var(--color-text)] opacity-40 text-xl sm:text-2xl font-black tracking-tight uppercase px-4 text-center">Void Directory</h4>
-                <p className="text-[var(--color-text)] opacity-20 text-sm sm:text-base font-medium italic">Provision assets to establish this collection.</p>
+                <p className="text-[var(--color-text)] opacity-20 text-sm sm:text-base font-medium italic">Upload files to add to this folder.</p>
               </div>
             </div>
           )}

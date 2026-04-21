@@ -52,7 +52,7 @@ export default function Notifications() {
             <div className="w-12 h-12 sm:w-16 sm:h-16 neu-concave rounded-full flex items-center justify-center mx-auto text-[var(--color-text)] opacity-10">
               <Check size={24} className="sm:w-8 sm:h-8" />
             </div>
-            <p className="text-xs sm:text-sm text-[var(--color-text)] opacity-20 italic font-medium">Equilibrium restored. Sync complete.</p>
+            <p className="text-xs sm:text-sm text-[var(--color-text)] opacity-20 italic font-medium">All caught up.</p>
           </div>
         </div>
       </div>
