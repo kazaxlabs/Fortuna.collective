@@ -97,7 +97,7 @@ export default function Sidebar({ activeRoute, onRouteChange }: SidebarProps) {
                 className="flex flex-col min-w-0"
               >
                 <span className="text-sm font-bold truncate text-[var(--color-text)] tracking-tight">{profile?.displayName || 'Account'}</span>
-                <span className="text-[10px] text-[var(--color-accent)] font-bold truncate uppercase tracking-widest">{profile?.role === 'admin' ? 'Administrator' : 'Distinguished Member'}</span>
+                <span className="text-[10px] text-[var(--color-accent)] font-bold truncate uppercase tracking-widest">{profile?.role === 'admin' ? 'Strategic Architect' : 'Core Node'}</span>
               </motion.div>
             )}
           </AnimatePresence>

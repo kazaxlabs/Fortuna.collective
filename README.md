@@ -1,20 +1,31 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Fortuna Collective
+### The Strategic Node Networking Architecture
 
-# Run and deploy your AI Studio app
+Welcome to the **Fortuna Collective**. This repository contains the source code for the private professional networking platform, built on the **Antigravity Design System**.
 
-This contains everything you need to run your app locally.
+## 📖 Documentation Index
+- **[PRD.md](./PRD.md)**: Product goals, features, and user requirements.
+- **[TECHNICAL.md](./TECHNICAL.md)**: Implementation details, tech stack, and architecture.
+- **[Design Guidelines](./ui%20ux%20style%20and%20design%20guidelines.md)**: UI/UX principles and visual tokens.
 
-View your app in AI Studio: https://ai.studio/apps/b7d020ff-7366-4a5a-a609-98e13af29876
+## 🚀 Quick Start
+1. **Initialize Dependencies**:
+   ```bash
+   npm install
+   ```
+2. **Start Local Environment**:
+   ```bash
+   npm run dev
+   ```
+3. **Build for Production**:
+   ```bash
+   npm run build
+   ```
 
-## Run Locally
+## 🔐 Security & Operations
+- **Firebase**: Ensure `firebase-applet-config.json` is populated with valid production credentials.
+- **Rules**: Security rules are defined in `firestore.rules`.
+- **Environment**: Define required keys in `.env` based on `.env.example`.
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+*Developed for the Strategic Architects of the Fortuna network.*
