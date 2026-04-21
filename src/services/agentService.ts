@@ -2,7 +2,9 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { collection, addDoc, serverTimestamp, query, where, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, auth, handleFirestoreError, OperationType } from "../firebase";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+// Initialize gracefully to prevent crashing local dev servers if the .env file is missing
+const apiKey = process.env.GEMINI_API_KEY;
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : ({} as any);
 
 export enum AgentRole {
   GOVERNOR = "governor",
