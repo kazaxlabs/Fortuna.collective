@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion as Motion } from 'motion/react';
-import { ShieldCheck, Key, UserPlus, LogIn } from 'lucide-react';
+import { ShieldCheck, Key, UserPlus, LogIn, Crown } from 'lucide-react';
 import { useAuth } from '../../context/useAuth';
+import { registerWithCredentials, loginWithCredentials } from '../../services/authService';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { db, auth } from '../../firebase';
 
 const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
 
@@ -28,6 +31,48 @@ export default function Login() {
     } catch (err: any) {
       console.error(err);
       setError('Invalid credentials or access denied.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFounderAccess = async () => {
+    setLoading(true);
+    setError('');
+    const founderEmail = 'founder@fortuna.admin';
+    const founderPass = 'founder2026!'; // Temporary hardcoded password
+    
+    try {
+      // Attempt login first
+      const result = await loginWithEmail(founderEmail, founderPass);
+      // Ensure the existing founder has onboardingComplete to bypass Onboarding screen
+      if (auth.currentUser) {
+        await setDoc(doc(db, 'users', auth.currentUser.uid), {
+          role: 'admin',
+          onboardingComplete: true,
+        }, { merge: true });
+        // Force reload to completely reset auth state and routing tree directly into the dashboard
+        window.location.reload();
+      }
+    } catch (loginErr: any) {
+      // If user doesn't exist, create it and bless it with admin role
+      try {
+        const user = await registerWithCredentials(founderEmail, founderPass, 'Founder');
+        // Force the admin role directly
+        await setDoc(doc(db, 'users', user.uid), {
+          uid: user.uid,
+          displayName: 'Founder',
+          email: founderEmail,
+          role: 'admin',
+          onboardingComplete: true,
+          createdAt: serverTimestamp(),
+        }, { merge: true });
+        
+        window.location.reload();
+      } catch (regErr: any) {
+        console.error(regErr);
+        setError('Failed to establish founder credentials.');
+      }
     } finally {
       setLoading(false);
     }
@@ -96,7 +141,23 @@ export default function Login() {
           </button>
         </form>
 
-        <footer className="mt-24 text-center">
+        <div className="w-full flex items-center gap-6 mb-8 mt-2">
+          <div className="flex-1 h-[2px] neu-concave rounded-full opacity-30"></div>
+          <span className="text-[10px] font-bold text-[var(--color-text)] opacity-40 uppercase tracking-[0.3em]">Administrator Override</span>
+          <div className="flex-1 h-[2px] neu-concave rounded-full opacity-30"></div>
+        </div>
+
+        <button
+          onClick={handleFounderAccess}
+          disabled={loading}
+          type="button"
+          className="w-full flex items-center justify-center gap-4 py-4 px-8 rounded-[1.5rem] border border-[var(--color-accent)]/30 text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 transition-all disabled:opacity-50"
+        >
+          <Crown size={16} strokeWidth={3} />
+          <span className="text-xs font-black uppercase tracking-[0.2em]">Founder Access</span>
+        </button>
+
+        <footer className="mt-16 text-center">
           <p className="text-[10px] text-[var(--color-text)] opacity-40 font-bold uppercase tracking-widest leading-relaxed max-w-xs">
             Authorized users only. Account activity is recorded for security purposes.
           </p>
